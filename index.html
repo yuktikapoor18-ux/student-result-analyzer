@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Result Analyzer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+            <h1>🎓 Student Result Analyzer</h1>
+
+            <p>
+                Analyze student marks, grades, class performance and results
+            </p>
+        </header>
+
+
+        <!-- ADD STUDENT -->
+
+        <section class="card">
+
+            <h2>➕ Add Student</h2>
+
+            <form id="studentForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="studentName">
+                            Student Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="studentName"
+                            placeholder="Enter student name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="studentMarks">
+                            Marks
+                        </label>
+
+                        <input
+                            type="number"
+                            id="studentMarks"
+                            placeholder="Enter marks (0-100)"
+                            min="0"
+                            max="100"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Add Student
+                </button>
+
+            </form>
+
+            <p
+                id="formMessage"
+                class="form-message"
+            ></p>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <span class="stat-icon">👥</span>
+
+                <div>
+                    <p>Total Students</p>
+                    <h3 id="totalStudents">0</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">📊</span>
+
+                <div>
+                    <p>Class Average</p>
+                    <h3 id="classAverage">0.00</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">🏆</span>
+
+                <div>
+                    <p>Highest Score</p>
+                    <h3 id="highestScore">0</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">📉</span>
+
+                <div>
+                    <p>Lowest Score</p>
+                    <h3 id="lowestScore">0</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">✅</span>
+
+                <div>
+                    <p>Passed</p>
+                    <h3 id="passedStudents">0</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">❌</span>
+
+                <div>
+                    <p>Failed</p>
+                    <h3 id="failedStudents">0</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">📈</span>
+
+                <div>
+                    <p>Pass Percentage</p>
+                    <h3 id="passPercentage">0%</h3>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">🏅</span>
+
+                <div>
+                    <p>Top Student</p>
+                    <h3 id="topStudent">-</h3>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STUDENT TABLE -->
+
+        <section class="card">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>📋 Student Results</h2>
+
+                    <p>
+                        View and manage all student records
+                    </p>
+                </div>
+
+                <button
+                    id="clearAllButton"
+                    class="danger-button"
+                    type="button"
+                >
+                    Clear All
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH AND SORT -->
+
+            <div class="controls">
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="🔍 Search student..."
+                    >
+
+                </div>
+
+
+                <select id="sortSelect">
+
+                    <option value="default">
+                        Sort: Default
+                    </option>
+
+                    <option value="nameAsc">
+                        Name: A → Z
+                    </option>
+
+                    <option value="nameDesc">
+                        Name: Z → A
+                    </option>
+
+                    <option value="marksHigh">
+                        Marks: High → Low
+                    </option>
+
+                    <option value="marksLow">
+                        Marks: Low → High
+                    </option>
+
+                    <option value="grade">
+                        Grade
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Name</th>
+
+                            <th>Marks</th>
+
+                            <th>Grade</th>
+
+                            <th>Status</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="studentTableBody">
+
+                    </tbody>
+
+                </table>
+
+
+                <div
+                    id="emptyState"
+                    class="empty-state"
+                >
+                    <div>📚</div>
+
+                    <h3>No Students Added</h3>
+
+                    <p>
+                        Add students above to start analyzing results.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PERFORMANCE ANALYSIS -->
+
+        <section class="analysis-grid">
+
+            <div class="card">
+
+                <h2>📊 Grade Distribution</h2>
+
+                <div class="grade-distribution">
+
+                    <div class="grade-row">
+
+                        <span>A</span>
+
+                        <div class="distribution-bar">
+                            <div
+                                id="gradeABar"
+                                class="bar"
+                            ></div>
+                        </div>
+
+                        <strong id="gradeACount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="grade-row">
+
+                        <span>B</span>
+
+                        <div class="distribution-bar">
+                            <div
+                                id="gradeBBar"
+                                class="bar"
+                            ></div>
+                        </div>
+
+                        <strong id="gradeBCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="grade-row">
+
+                        <span>C</span>
+
+                        <div class="distribution-bar">
+                            <div
+                                id="gradeCBar"
+                                class="bar"
+                            ></div>
+                        </div>
+
+                        <strong id="gradeCCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="grade-row">
+
+                        <span>D</span>
+
+                        <div class="distribution-bar">
+                            <div
+                                id="gradeDBar"
+                                class="bar"
+                            ></div>
+                        </div>
+
+                        <strong id="gradeDCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="grade-row">
+
+                        <span>F</span>
+
+                        <div class="distribution-bar">
+                            <div
+                                id="gradeFBar"
+                                class="bar"
+                            ></div>
+                        </div>
+
+                        <strong id="gradeFCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>🏆 Performance Summary</h2>
+
+                <div class="summary">
+
+                    <p>
+                        <span>Highest Scoring Student</span>
+
+                        <strong id="highestStudentName">
+                            -
+                        </strong>
+                    </p>
+
+
+                    <p>
+                        <span>Lowest Scoring Student</span>
+
+                        <strong id="lowestStudentName">
+                            -
+                        </strong>
+                    </p>
+
+
+                    <p>
+                        <span>Class Average</span>
+
+                        <strong id="summaryAverage">
+                            0.00
+                        </strong>
+                    </p>
+
+
+                    <p>
+                        <span>Pass Percentage</span>
+
+                        <strong id="summaryPassPercentage">
+                            0%
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXPORT -->
+
+        <section class="card export-card">
+
+            <h2>📥 Export Results</h2>
+
+            <p>
+                Save or print the complete student result report.
+            </p>
+
+            <div class="export-buttons">
+
+                <button
+                    id="csvButton"
+                    class="secondary-button"
+                    type="button"
+                >
+                    📊 Download CSV
+                </button>
+
+
+                <button
+                    id="txtButton"
+                    class="secondary-button"
+                    type="button"
+                >
+                    📄 Download TXT
+                </button>
+
+
+                <button
+                    id="printButton"
+                    class="secondary-button"
+                    type="button"
+                >
+                    🖨️ Print / Save PDF
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- GRADING INFO -->
+
+        <section class="card grading-card">
+
+            <h2>📚 Grading System</h2>
+
+            <div class="grading-grid">
+
+                <div>
+                    <strong>A</strong>
+                    <span>90 - 100</span>
+                </div>
+
+                <div>
+                    <strong>B</strong>
+                    <span>80 - 89</span>
+                </div>
+
+                <div>
+                    <strong>C</strong>
+                    <span>70 - 79</span>
+                </div>
+
+                <div>
+                    <strong>D</strong>
+                    <span>60 - 69</span>
+                </div>
+
+                <div>
+                    <strong>E</strong>
+                    <span>40 - 59</span>
+                </div>
+
+                <div>
+                    <strong>F</strong>
+                    <span>Below 40</span>
+                </div>
+
+            </div>
+
+            <p class="pass-note">
+                Passing marks: <strong>40</strong>
+            </p>
+
+        </section>
+
+
+        <footer>
+
+            <p>
+                Student Result Analyzer
+            </p>
+
+            <span>
+                Built with HTML, CSS & JavaScript
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <!-- EDIT MODAL -->
+
+    <div
+        id="editModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                id="closeModal"
+                class="close-button"
+                type="button"
+            >
+                ×
+            </button>
+
+            <h2>✏️ Edit Student</h2>
+
+            <input
+                type="text"
+                id="editName"
+                placeholder="Student name"
+            >
+
+            <input
+                type="number"
+                id="editMarks"
+                placeholder="Marks"
+                min="0"
+                max="100"
+            >
+
+            <button
+                id="saveEdit"
+                class="primary-button"
+                type="button"
+            >
+                Save Changes
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
