@@ -4,7 +4,7 @@ A complete and interactive **Student Result Analyzer** built using HTML, CSS, an
 
 ## 🌐 Live Website
 
-👉 
+👉 https://yuktikapoor18-ux.github.io/student-result-analyzer/
 
 <!-- Replace YOUR_WEBSITE_LINK_HERE with your GitHub Pages website link -->
 
